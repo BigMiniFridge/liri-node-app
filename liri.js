@@ -18,8 +18,8 @@ switch(action) {
     break;
     
     case "spotify-this-song":
-    if (x) {
-        spotifySong(x);
+    if (userInput) {
+        spotifySong(userInput);
     }
     else {
         spotifySong("The Sign")
@@ -27,8 +27,8 @@ switch(action) {
     break;
 
     case "movie-this":
-    if (x) {
-        omdbData(x);
+    if (userInput) {
+        omdbData(userInput);
 
     }
     else {
@@ -116,6 +116,20 @@ function spotifySong(song){
     });
   
   }
+
+  function concertThis() {
+
+    var concertURL = ("https://rest.bandsintown.com/artists/" + userInput + "/events?app_id=codingbootcamp")
+    request(concertURL, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            console.log("\n---------------------------------\n")
+            console.log("Venue: " + JSON.parse(body)[0].venue.name);
+            console.log("Location: " + JSON.parse(body)[0].venue.city + ", " + JSON.parse(body)[0].venue.country);
+            console.log("Event Date: " + moment(body[0].datetime).format("MM/DD/YYYY"));
+            console.log("\n---------------------------------\n")
+        }
+    });
+}
   
   function doThing(){
     fs.readFile('random.txt', "utf8", function(error, data){
